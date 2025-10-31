@@ -20,9 +20,8 @@ app.use(express.json());
 // app.use("/movies", movieRouter)
 
 //impostazione rotta di HOME
- app.get("/", (req, res) => {
+ app.get("/api", (req, res) => {
     console.log("hao richiesto la rotta di index");
-
     res.send("<h1>Ecco la homedella api dei film </h1>")
  });
 
