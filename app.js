@@ -5,6 +5,9 @@ const app = express();
 /* Impostazione di un ref per il numero della porta */
 const port = 3000;
 
+//Import delle rotte router per i film
+const movieRouter = require('./routers/movieRouter')
+
 /* Importo globalmente il middleware di gestione errore server */
 const errorServer = require("./middlewares/errorServer");
 /* Importo globalmente il middleware di gestione 404 PER ROTTA INNESISTENTE */
@@ -17,11 +20,11 @@ app.use(express.static('public'));
 app.use(express.json());
 
 // rotte per i film
-// app.use("/movies", movieRouter)
+ app.use("/api/movies", movieRouter)
 
 //impostazione rotta di HOME
  app.get("/api", (req, res) => {
-    console.log("hao richiesto la rotta di index");
+    console.log("hai richiesto la rotta di index");
     res.send("<h1>Ecco la homedella api dei film </h1>")
  });
 
