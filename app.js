@@ -13,6 +13,13 @@ const errorServer = require("./middlewares/errorServer");
 /* Importo globalmente il middleware di gestione 404 PER ROTTA INNESISTENTE */
 const notFound = require("./middlewares/notFound");
 
+// import middlewere cors
+const cors = require("cors");
+
+/* Middlewerers per oò CORS */
+app.use(cors({
+   origin: 'http://localhost:5173'
+}))
 /* usiamo il middleware di espress per rendere disponibili i file statici */
 app.use(express.static('public'));
 
