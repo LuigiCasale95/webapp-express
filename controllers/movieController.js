@@ -29,7 +29,7 @@ function show(req, res) {
     const reviewSql = 'SELECT * FROM reviews WHERE movie_id = ?';
 
     // aggiungiamo la connesione per la richiesta
-    connection.query(movieSql, [id], (err, bookResult) => {
+    connection.query(movieSql, [id], (err, movieResult) => {
         // gestiamo errore server mysql
         if (err) return res.status(500).json({ error: "Database error" })
         // gestiamo anche il 404
