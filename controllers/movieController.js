@@ -36,8 +36,8 @@ function show(req, res) {
         if (movieResult.length === 0) return res.status(404).json({ error: "Movie not found" })
 
         // creiamo oggetto singolo film
-        const singlemovie = movieResult[0];
-        singlemovie.image = req.imagePath + singlemovie.image;
+        const singleMovie = movieResult[0];
+        singleMovie.image = req.imagePath + singleMovie.image;
 
 
         // aggiungiamo connesione per richiesta reviews relative
@@ -45,11 +45,11 @@ function show(req, res) {
             // gestiamo errore server mysql
             if (err) return res.status(500).json({ error: "Database error" })
             // aggiungiamo le reviews sull'oggetto del singolo film
-            singlemovie.reviews = reviewResult;
+            singleMovie.reviews = reviewResult;
 
 
             // ritorniamo il risultato ottenuto
-            res.json(singlemovie);
+            res.json(singleMovie);
         });
 
 
