@@ -18,7 +18,7 @@ const cors = require("cors");
 
 /* Middlewerers per oò CORS */
 app.use(cors({
-   origin: 'http://localhost:5173'
+   origin: process.env.FE_APP
 }))
 /* usiamo il middleware di espress per rendere disponibili i file statici */
 app.use(express.static('public'));
