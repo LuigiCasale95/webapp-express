@@ -11,10 +11,17 @@ function index(req, res) {
     connection.query(sql, (err, result) => {
         // gestiamo errore server mysql
         if (err) return res.status(500).json({ error: "Database error" })
-        // ritorniamo il risultato ottenuto
-        res.json(result);
-    });
 
+// prepariamo versione listato film con valore image completo
+            const movies = result.map((movie) => {
+                return {
+                    ...movie,
+                    image: req.imagePath + movie.image
+                }
+            });
+        // ritorniamo il risultato ottenuto
+        res.json(movies);
+    });
 }
 
 //  SHOW
@@ -32,6 +39,8 @@ function show(req, res) {
     connection.query(movieSql, [id], (err, movieResult) => {
         // gestiamo errore server mysql
         if (err) return res.status(500).json({ error: "Database error" })
+
+
         // gestiamo anche il 404
         if (movieResult.length === 0) return res.status(404).json({ error: "Movie not found" })
 
@@ -52,9 +61,31 @@ function show(req, res) {
             res.json(singleMovie);
         });
 
-
     });
 
 }
 
-module.exports = { index, show }
+// Store review
+function storeReview(req, res) {
+
+    // recuperiamo id da param
+    const id = req.params.id;
+
+    // recuperiamo i dati nel body
+    const { name, vote, text } = req.body;
+
+    // prepariamo la query per la chiamata al DB
+    const sql = 'INSERT INTO `reviews` (`name`, `vote`, `text`, `movie_id`) VALUES (?,?,?,?)';
+
+    // eseguiamo la query (con check preventivo dei dati)
+    connection.query(sql, [name, vote, text, id], (err, result) => {
+        // se c'è errore server DB
+        if (err) return res.status(500).json({ error: 'Database queri failed' });
+        // se va tutto bene
+        res.status(201);
+        res.json({ id: result.insertId, message: 'Review added' });
+    })
+
+}
+
+module.exports = { index, show , storeReview}
